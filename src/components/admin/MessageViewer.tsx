@@ -48,9 +48,9 @@ export default function MessageViewer() {
     <div>
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center gap-3">
-          <h2 className="text-xl font-bold text-surface-900 dark:text-surface-100">Messages</h2>
+          <h2 className="text-xl font-display font-bold text-brand-text">Messages</h2>
           {unreadCount > 0 && (
-            <span className="px-2.5 py-1 bg-primary-500 text-white text-xs font-bold rounded-full">
+            <span className="px-2.5 py-1 bg-brand-lavender text-white text-xs font-bold rounded-full">
               {unreadCount} new
             </span>
           )}
@@ -62,8 +62,8 @@ export default function MessageViewer() {
               onClick={() => setFilter(f)}
               className={`px-4 py-2 rounded-xl text-sm font-medium transition-all ${
                 filter === f
-                  ? 'bg-gradient-to-r from-primary-600 to-teal-600 text-white'
-                  : 'glass text-surface-600 dark:text-surface-300'
+                  ? 'bg-gradient-to-r from-brand-lavender to-brand-pink text-white'
+                  : 'glass text-brand-muted hover:text-brand-text'
               }`}
             >
               {f === 'all' ? 'All' : 'Unread'}
@@ -73,7 +73,7 @@ export default function MessageViewer() {
       </div>
 
       {loading ? (
-        <div className="flex justify-center py-12"><Loader2 className="animate-spin text-primary-500" size={32} /></div>
+        <div className="flex justify-center py-12"><Loader2 className="animate-spin text-brand-lavender" size={32} /></div>
       ) : (
         <div className="grid lg:grid-cols-2 gap-4">
           {/* Message list */}
@@ -82,42 +82,42 @@ export default function MessageViewer() {
               <div
                 key={msg.id}
                 onClick={() => markRead(msg)}
-                className={`card cursor-pointer transition-all duration-200 hover:-translate-y-0.5 ${
-                  selected?.id === msg.id ? 'ring-2 ring-primary-500/50' : ''
-                } ${!msg.read ? 'border-l-4 border-l-primary-500' : ''}`}
+                className={`glass-card p-5 cursor-pointer transition-all duration-200 hover:-translate-y-0.5 hover:border-brand-lavender/30 ${
+                  selected?.id === msg.id ? 'ring-2 ring-brand-lavender/50 border-brand-lavender/30' : ''
+                } ${!msg.read ? 'border-l-4 border-l-brand-lavender' : ''}`}
               >
                 <div className="flex items-start justify-between gap-3">
                   <div className="flex items-start gap-3 min-w-0">
-                    <div className={`mt-0.5 shrink-0 ${!msg.read ? 'text-primary-500' : 'text-surface-400'}`}>
+                    <div className={`mt-0.5 shrink-0 ${!msg.read ? 'text-brand-lavender' : 'text-brand-muted-2'}`}>
                       {msg.read ? <MailOpen size={18} /> : <Mail size={18} />}
                     </div>
                     <div className="min-w-0">
                       <div className="flex items-center gap-2">
-                        <p className={`font-semibold truncate text-sm ${!msg.read ? 'text-surface-900 dark:text-surface-100' : 'text-surface-700 dark:text-surface-300'}`}>
+                        <p className={`font-semibold truncate text-sm ${!msg.read ? 'text-brand-text' : 'text-brand-muted'}`}>
                           {msg.name}
                         </p>
-                        {!msg.read && <span className="w-2 h-2 bg-primary-500 rounded-full shrink-0" />}
+                        {!msg.read && <span className="w-2 h-2 bg-brand-lavender rounded-full shrink-0" />}
                       </div>
-                      <p className="text-xs text-surface-500 dark:text-surface-400 truncate">{msg.subject}</p>
-                      <p className="text-xs text-surface-400 mt-1 truncate">{msg.message.slice(0, 60)}...</p>
+                      <p className="text-xs text-brand-muted truncate">{msg.subject}</p>
+                      <p className="text-xs text-brand-muted-2 mt-1 truncate">{msg.message.slice(0, 60)}...</p>
                     </div>
                   </div>
                   <button
                     onClick={e => { e.stopPropagation(); handleDelete(msg.id); }}
                     disabled={deleting === msg.id}
-                    className="p-1.5 glass rounded-lg hover:text-red-500 transition-colors shrink-0 disabled:opacity-50"
+                    className="p-1.5 glass rounded-lg hover:text-red-400 transition-colors shrink-0 disabled:opacity-50 text-brand-muted"
                   >
                     {deleting === msg.id ? <Loader2 size={14} className="animate-spin" /> : <Trash2 size={14} />}
                   </button>
                 </div>
-                <div className="flex items-center gap-1 mt-2 text-xs text-surface-400">
+                <div className="flex items-center gap-1 mt-2 text-xs text-brand-muted-2">
                   <Clock size={11} /> {formatDate(msg.created_at)}
                 </div>
               </div>
             ))}
             {filtered.length === 0 && (
-              <div className="text-center py-12 text-surface-500">
-                <AlertCircle size={32} className="mx-auto mb-3 text-surface-300" />
+              <div className="text-center py-12 text-brand-muted">
+                <AlertCircle size={32} className="mx-auto mb-3 text-brand-muted-2" />
                 <p>{filter === 'unread' ? 'No unread messages.' : 'No messages yet.'}</p>
               </div>
             )}
@@ -126,23 +126,23 @@ export default function MessageViewer() {
           {/* Message detail */}
           <div>
             {selected ? (
-              <div className="card h-fit sticky top-24">
+              <div className="glass-card p-6 h-fit sticky top-24">
                 <div className="flex items-center justify-between mb-4">
-                  <h3 className="font-bold text-surface-900 dark:text-surface-100">{selected.subject}</h3>
-                  <span className="text-xs text-surface-400">{formatDate(selected.created_at)}</span>
+                  <h3 className="font-display font-bold text-brand-text">{selected.subject}</h3>
+                  <span className="text-xs text-brand-muted-2">{formatDate(selected.created_at)}</span>
                 </div>
-                <div className="flex items-center gap-2 mb-4 p-3 bg-surface-50 dark:bg-surface-800/50 rounded-xl">
+                <div className="flex items-center gap-2 mb-4 p-3 bg-brand-surface-2/50 rounded-xl border border-brand-border">
                   <div>
-                    <p className="font-semibold text-sm text-surface-900 dark:text-surface-100">{selected.name}</p>
-                    <a href={`mailto:${selected.email}`} className="text-xs text-primary-600 dark:text-primary-400 hover:underline">
+                    <p className="font-semibold text-sm text-brand-text">{selected.name}</p>
+                    <a href={`mailto:${selected.email}`} className="text-xs text-brand-lavender hover:underline">
                       {selected.email}
                     </a>
                   </div>
                 </div>
-                <p className="text-surface-700 dark:text-surface-300 leading-relaxed text-sm whitespace-pre-wrap">
+                <p className="text-brand-muted leading-relaxed text-sm whitespace-pre-wrap">
                   {selected.message}
                 </p>
-                <div className="mt-5 pt-4 border-t border-surface-200/50 dark:border-surface-700/30">
+                <div className="mt-5 pt-4 border-t border-brand-border">
                   <a
                     href={`mailto:${selected.email}?subject=Re: ${selected.subject}`}
                     className="btn-primary text-sm py-2.5 w-full justify-center"
@@ -153,9 +153,9 @@ export default function MessageViewer() {
                 </div>
               </div>
             ) : (
-              <div className="card flex flex-col items-center justify-center py-16 text-center">
-                <MailOpen size={40} className="text-surface-300 dark:text-surface-600 mb-3" />
-                <p className="text-surface-500 dark:text-surface-400">Select a message to read</p>
+              <div className="glass-card p-6 flex flex-col items-center justify-center py-16 text-center">
+                <MailOpen size={40} className="text-brand-muted-2 mb-3" />
+                <p className="text-brand-muted">Select a message to read</p>
               </div>
             )}
           </div>

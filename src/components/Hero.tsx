@@ -1,7 +1,9 @@
 import { useEffect, useRef } from 'react';
-import { Github, Linkedin, Mail, Download, ArrowDown, Sparkles } from 'lucide-react';
+import { Github, Linkedin, Mail, Download, ArrowDown } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { fadeInUp, staggerContainer } from '../lib/animations';
 
-const TYPED_STRINGS = ['Web Developer', 'React Specialist', 'CS Student', 'Problem Solver'];
+const TYPED_STRINGS = ['Full Stack Developer', 'Frontend Developer', 'JavaScript Enthusiast'];
 
 export default function Hero() {
   const typedRef = useRef<HTMLSpanElement>(null);
@@ -32,91 +34,120 @@ export default function Hero() {
           indexRef.current = (indexRef.current + 1) % TYPED_STRINGS.length;
         }
       }
-      timerRef.current = window.setTimeout(type, deletingRef.current ? 60 : 100);
+      timerRef.current = window.setTimeout(type, deletingRef.current ? 50 : 100);
     };
 
-    timerRef.current = window.setTimeout(type, 500);
+    timerRef.current = window.setTimeout(type, 800);
     return () => clearTimeout(timerRef.current);
   }, []);
 
   return (
     <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      {/* Background */}
-      <div className="absolute inset-0 grid-bg opacity-40" />
-      <div className="absolute top-20 -left-40 w-96 h-96 bg-primary-400/20 rounded-full blur-3xl animate-pulse-slow" />
-      <div className="absolute bottom-20 -right-40 w-96 h-96 bg-teal-400/20 rounded-full blur-3xl animate-pulse-slow animation-delay-300" />
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-primary-500/5 rounded-full blur-3xl" />
+      {/* Animated background */}
+      <div className="absolute inset-0 hero-gradient" />
+      <div className="absolute inset-0 dot-pattern opacity-30" />
+
+      {/* Floating orbs */}
+      <div className="absolute top-20 -left-32 w-96 h-96 bg-brand-lavender/10 rounded-full blur-[100px] animate-float" />
+      <div className="absolute bottom-20 -right-32 w-96 h-96 bg-brand-pink/10 rounded-full blur-[100px] animate-float-slow" />
+      <div className="absolute top-1/3 right-1/4 w-64 h-64 bg-brand-lavender/5 rounded-full blur-[80px] animate-pulse-slow" />
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-32">
-        <div className="grid lg:grid-cols-1 gap-16 items-center">
-          {/* Text content */}
-          <div className="text-center animate-fade-up">
-            <div className="inline-flex items-center gap-2 px-4 py-2 glass rounded-full text-sm font-medium text-primary-600 dark:text-primary-400 mb-6 border border-primary-200 dark:border-primary-800">
-              <Sparkles size={14} className="text-teal-500" />
-              B.Tech Computer Science Student | Graduating 2027
-            </div>
+        <motion.div
+          variants={staggerContainer}
+          initial="hidden"
+          animate="visible"
+          className="text-center"
+        >
+          {/* Status badge */}
+          <motion.div variants={fadeInUp} className="inline-flex items-center gap-2 px-4 py-2 glass rounded-full text-sm font-medium text-brand-lavender mb-8">
+            <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
+            B.Tech Computer Science Student | Graduating 2027
+          </motion.div>
 
-            <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-4 leading-tight">
-              <span className="text-surface-900 dark:text-white">Hi, I'm </span>
-              <span className="gradient-text">Nakkina Poojitha</span>
-            </h1>
+          {/* Name */}
+          <motion.h1
+            variants={fadeInUp}
+            className="text-5xl md:text-6xl lg:text-8xl font-display font-bold mb-4 leading-tight tracking-tight"
+          >
+            <span className="text-brand-text">Hi, I'm </span>
+            <span className="gradient-text">Poojitha</span>
+          </motion.h1>
 
-            <div className="text-2xl md:text-3xl font-semibold text-surface-600 dark:text-surface-300 mb-6 h-10">
-              <span ref={typedRef} className="gradient-text" />
-              <span className="animate-pulse text-primary-500">|</span>
-            </div>
+          {/* Typed role */}
+          <motion.div
+            variants={fadeInUp}
+            className="text-2xl md:text-3xl lg:text-4xl font-display font-semibold text-brand-muted mb-8 h-12 flex items-center justify-center"
+          >
+            <span ref={typedRef} className="gradient-text-alt" />
+            <span className="animate-pulse text-brand-lavender ml-0.5">|</span>
+          </motion.div>
 
-            <p className="text-lg text-surface-600 dark:text-surface-400 mb-10 leading-relaxed max-w-xl mx-auto lg:mx-0">
-              B.Tech Computer Science student with strong technical skills and a passion for innovation.
-              Building web applications, machine learning models, and IoT solutions.
-            </p>
+          {/* Description */}
+          <motion.p
+            variants={fadeInUp}
+            className="text-lg md:text-xl text-brand-muted mb-12 leading-relaxed max-w-2xl mx-auto"
+          >
+            B.Tech Computer Science student with strong technical skills and a passion for innovation.
+            Building web applications, machine learning models, and IoT solutions.
+          </motion.p>
 
-            <div className="flex flex-wrap gap-4 justify-center lg:justify-start mb-10">
+          {/* CTA Buttons */}
+          <motion.div variants={fadeInUp} className="flex flex-wrap gap-4 justify-center mb-12">
+            <a
+              href="/NAKKINA_POOJITHA_updated_01.pdf"
+              download
+              className="btn-primary"
+            >
+              <Download size={18} />
+              Download Resume
+            </a>
+            <a
+              href="#contact"
+              onClick={(e) => { e.preventDefault(); document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' }); }}
+              className="btn-secondary"
+            >
+              <Mail size={18} />
+              Get in Touch
+            </a>
+          </motion.div>
+
+          {/* Social links */}
+          <motion.div variants={fadeInUp} className="flex items-center gap-6 justify-center">
+            {[
+              { Icon: Github, href: 'https://github.com', label: 'GitHub' },
+              { Icon: Linkedin, href: 'https://linkedin.com/in/poojitha-nakkina', label: 'LinkedIn' },
+              { Icon: Mail, href: 'mailto:poojithanakkina2005@gmail.com', label: 'Email' },
+            ].map(({ Icon, href, label }) => (
               <a
-                href="/resume.pdf"
-                download
-                className="btn-primary"
+                key={label}
+                href={href}
+                target={href.startsWith('http') ? '_blank' : undefined}
+                rel="noopener noreferrer"
+                aria-label={label}
+                className="p-3 glass rounded-xl hover:border-brand-lavender/30 hover:shadow-glow-lavender hover:scale-110 active:scale-95 transition-all duration-300 text-brand-muted hover:text-brand-lavender"
               >
-                <Download size={18} />
-                Download Resume
+                <Icon size={22} />
               </a>
-              <a
-                href="#contact"
-                onClick={(e) => { e.preventDefault(); document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' }); }}
-                className="btn-secondary"
-              >
-                <Mail size={18} />
-                Get in Touch
-              </a>
-            </div>
-
-            <div className="flex items-center gap-5 justify-center lg:justify-start">
-              <span className="text-sm text-surface-500 dark:text-surface-400">Find me on:</span>
-              {[
-                { Icon: Github, href: 'https://github.com', label: 'GitHub' },
-                { Icon: Linkedin, href: 'https://linkedin.com/in/poojitha-nakkina', label: 'LinkedIn' },
-                { Icon: Mail, href: 'mailto:poojithanakkina2005@gmail.com', label: 'Email' },
-              ].map(({ Icon, href, label }) => (
-                <a
-                  key={label}
-                  href={href}
-                  target={href.startsWith('http') ? '_blank' : undefined}
-                  rel="noopener noreferrer"
-                  aria-label={label}
-                  className="p-2.5 glass rounded-xl hover:scale-110 hover:shadow-glow-blue active:scale-95 transition-all duration-200 text-surface-600 dark:text-surface-300 hover:text-primary-600 dark:hover:text-primary-400"
-                >
-                  <Icon size={20} />
-                </a>
-              ))}
-            </div>
-          </div>
-        </div>
+            ))}
+          </motion.div>
+        </motion.div>
 
         {/* Scroll indicator */}
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-surface-400 animate-bounce">
-          <span className="text-xs">Scroll down</span>
-          <ArrowDown size={16} />
-        </div>
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 2, duration: 1 }}
+          className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-brand-muted-2"
+        >
+          <span className="text-xs tracking-widest uppercase">Scroll</span>
+          <motion.div
+            animate={{ y: [0, 8, 0] }}
+            transition={{ duration: 1.5, repeat: Infinity, ease: 'easeInOut' }}
+          >
+            <ArrowDown size={16} className="text-brand-lavender" />
+          </motion.div>
+        </motion.div>
       </div>
     </section>
   );

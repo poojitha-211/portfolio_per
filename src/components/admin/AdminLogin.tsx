@@ -20,29 +20,27 @@ export default function AdminLogin() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-surface-50 via-primary-50/30 to-teal-50/30 dark:from-surface-950 dark:via-primary-950/20 dark:to-surface-950 px-4">
-      <div className="absolute inset-0 grid-bg opacity-30" />
-      <div className="absolute top-20 -left-20 w-64 h-64 bg-primary-400/10 rounded-full blur-3xl" />
-      <div className="absolute bottom-20 -right-20 w-64 h-64 bg-teal-400/10 rounded-full blur-3xl" />
+    <div className="min-h-screen flex items-center justify-center bg-brand-bg px-4 relative">
+      <div className="absolute inset-0 hero-gradient" />
+      <div className="absolute inset-0 dot-pattern opacity-20" />
+      <div className="absolute top-20 -left-20 w-64 h-64 bg-brand-lavender/10 rounded-full blur-[80px]" />
+      <div className="absolute bottom-20 -right-20 w-64 h-64 bg-brand-pink/10 rounded-full blur-[80px]" />
 
       <div className="relative w-full max-w-md">
         <div className="glass-strong rounded-3xl p-8 shadow-2xl">
-          {/* Logo */}
           <div className="text-center mb-8">
-            <div className="w-16 h-16 bg-gradient-to-br from-primary-500 to-teal-500 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-glow-blue">
+            <div className="w-16 h-16 bg-gradient-to-br from-brand-lavender to-brand-pink rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-glow-lavender">
               <Code2 size={28} className="text-white" />
             </div>
-            <h1 className="text-2xl font-bold text-surface-900 dark:text-surface-100">Admin Panel</h1>
-            <p className="text-surface-500 dark:text-surface-400 mt-1 text-sm">Sign in to manage your portfolio</p>
+            <h1 className="text-2xl font-display font-bold text-brand-text">Admin Panel</h1>
+            <p className="text-brand-muted mt-1 text-sm">Sign in to manage your portfolio</p>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-5">
             <div>
-              <label className="block text-sm font-medium text-surface-700 dark:text-surface-300 mb-2">
-                Email
-              </label>
+              <label className="block text-sm font-medium text-brand-text/80 mb-2">Email</label>
               <div className="relative">
-                <Mail size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-surface-400" />
+                <Mail size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-brand-muted-2" />
                 <input
                   type="email"
                   value={email}
@@ -55,11 +53,9 @@ export default function AdminLogin() {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-surface-700 dark:text-surface-300 mb-2">
-                Password
-              </label>
+              <label className="block text-sm font-medium text-brand-text/80 mb-2">Password</label>
               <div className="relative">
-                <Lock size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-surface-400" />
+                <Lock size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-brand-muted-2" />
                 <input
                   type={showPw ? 'text' : 'password'}
                   value={password}
@@ -71,7 +67,7 @@ export default function AdminLogin() {
                 <button
                   type="button"
                   onClick={() => setShowPw(!showPw)}
-                  className="absolute right-3.5 top-1/2 -translate-y-1/2 text-surface-400 hover:text-surface-600 transition-colors"
+                  className="absolute right-3.5 top-1/2 -translate-y-1/2 text-brand-muted-2 hover:text-brand-text transition-colors"
                 >
                   {showPw ? <EyeOff size={16} /> : <Eye size={16} />}
                 </button>
@@ -79,7 +75,7 @@ export default function AdminLogin() {
             </div>
 
             {error && (
-              <div className="flex items-center gap-2 p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-xl text-red-600 dark:text-red-400 text-sm">
+              <div className="flex items-center gap-2 p-3 bg-red-500/10 border border-red-500/20 rounded-xl text-red-400 text-sm">
                 <AlertCircle size={16} />
                 {error}
               </div>
@@ -94,7 +90,7 @@ export default function AdminLogin() {
             </button>
           </form>
 
-          <p className="text-center text-xs text-surface-400 dark:text-surface-500 mt-6">
+          <p className="text-center text-xs text-brand-muted-2 mt-6">
             Restricted access — authorized personnel only
           </p>
         </div>

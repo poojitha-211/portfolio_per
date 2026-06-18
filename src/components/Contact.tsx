@@ -1,6 +1,8 @@
 import { useState } from 'react';
-import { Send, Mail, MapPin, Phone, CheckCircle2, Loader2, AlertCircle } from 'lucide-react';
+import { Send, Mail, MapPin, Phone, CheckCircle2, Loader2, AlertCircle, Github, Linkedin } from 'lucide-react';
+import { motion } from 'framer-motion';
 import { supabase } from '../lib/supabase';
+import { fadeInUp, fadeInLeft, fadeInRight, staggerContainer } from '../lib/animations';
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -53,12 +55,12 @@ export default function Contact() {
     label, id, error, children,
   }: { label: string; id: string; error?: string; children: React.ReactNode }) => (
     <div>
-      <label htmlFor={id} className="block text-sm font-medium text-surface-700 dark:text-surface-300 mb-2">
+      <label htmlFor={id} className="block text-sm font-medium text-brand-text/80 mb-2">
         {label}
       </label>
       {children}
       {error && (
-        <p className="mt-1.5 text-xs text-red-500 flex items-center gap-1">
+        <p className="mt-1.5 text-xs text-red-400 flex items-center gap-1">
           <AlertCircle size={12} />
           {error}
         </p>
@@ -68,20 +70,33 @@ export default function Contact() {
 
   return (
     <section id="contact" className="py-24 relative">
-      <div className="absolute bottom-0 left-0 w-72 h-72 bg-primary-400/10 rounded-full blur-3xl" />
+      <div className="absolute bottom-0 left-0 w-96 h-96 bg-brand-lavender/5 rounded-full blur-[120px]" />
+      <div className="absolute top-0 right-0 w-72 h-72 bg-brand-pink/5 rounded-full blur-[100px]" />
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
-          <h2 className="section-title">Get in Touch</h2>
-          <p className="section-subtitle mx-auto">
+        <motion.div
+          variants={staggerContainer}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: '-100px' }}
+          className="text-center mb-16"
+        >
+          <motion.h2 variants={fadeInUp} className="section-title">Get in Touch</motion.h2>
+          <motion.p variants={fadeInUp} className="section-subtitle mx-auto">
             Have a project in mind or want to chat? I'd love to hear from you.
-          </p>
-        </div>
+          </motion.p>
+        </motion.div>
 
-        <div className="grid lg:grid-cols-5 gap-10">
+        <div className="grid lg:grid-cols-5 gap-8">
           {/* Info panel */}
-          <div className="lg:col-span-2 space-y-6">
-            <div className="card">
-              <h3 className="font-bold text-xl text-surface-900 dark:text-surface-100 mb-6">Contact Info</h3>
+          <motion.div
+            variants={fadeInLeft}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: '-100px' }}
+            className="lg:col-span-2 space-y-6"
+          >
+            <div className="glass-card p-6">
+              <h3 className="font-display font-bold text-xl text-brand-text mb-6">Contact Info</h3>
               <div className="space-y-5">
                 {[
                   { Icon: Mail, label: 'Email', value: 'poojithanakkina2005@gmail.com', href: 'mailto:poojithanakkina2005@gmail.com' },
@@ -89,17 +104,17 @@ export default function Contact() {
                   { Icon: Phone, label: 'Phone', value: 'Available on request', href: null },
                 ].map(({ Icon, label, value, href }) => (
                   <div key={label} className="flex items-center gap-4">
-                    <div className="w-10 h-10 bg-gradient-to-br from-primary-100 to-teal-100 dark:from-primary-900/40 dark:to-teal-900/40 rounded-xl flex items-center justify-center shrink-0">
-                      <Icon size={18} className="text-primary-600 dark:text-primary-400" />
+                    <div className="w-10 h-10 bg-brand-lavender/10 rounded-xl flex items-center justify-center shrink-0 border border-brand-lavender/20">
+                      <Icon size={18} className="text-brand-lavender" />
                     </div>
                     <div>
-                      <p className="text-xs text-surface-500 dark:text-surface-400">{label}</p>
+                      <p className="text-xs text-brand-muted-2">{label}</p>
                       {href ? (
-                        <a href={href} className="font-medium text-surface-800 dark:text-surface-200 hover:text-primary-600 dark:hover:text-primary-400 transition-colors">
+                        <a href={href} className="font-medium text-brand-text hover:text-brand-lavender transition-colors duration-200 text-sm">
                           {value}
                         </a>
                       ) : (
-                        <p className="font-medium text-surface-800 dark:text-surface-200">{value}</p>
+                        <p className="font-medium text-brand-text text-sm">{value}</p>
                       )}
                     </div>
                   </div>
@@ -107,25 +122,54 @@ export default function Contact() {
               </div>
             </div>
 
-            <div className="card">
-              <h3 className="font-bold text-surface-900 dark:text-surface-100 mb-3">Response Time</h3>
-              <p className="text-surface-600 dark:text-surface-400 text-sm leading-relaxed">
-                I typically respond to messages within <span className="text-primary-600 dark:text-primary-400 font-semibold">24 hours</span>.
+            {/* Social links */}
+            <div className="glass-card p-6">
+              <h3 className="font-display font-bold text-brand-text mb-4">Connect</h3>
+              <div className="flex gap-3">
+                {[
+                  { Icon: Github, href: 'https://github.com', label: 'GitHub' },
+                  { Icon: Linkedin, href: 'https://linkedin.com/in/poojitha-nakkina', label: 'LinkedIn' },
+                  { Icon: Mail, href: 'mailto:poojithanakkina2005@gmail.com', label: 'Email' },
+                ].map(({ Icon, href, label }) => (
+                  <a
+                    key={label}
+                    href={href}
+                    target={href.startsWith('http') ? '_blank' : undefined}
+                    rel="noopener noreferrer"
+                    aria-label={label}
+                    className="p-3 glass rounded-xl hover:border-brand-lavender/30 hover:shadow-glow-lavender hover:scale-110 active:scale-95 transition-all duration-300 text-brand-muted hover:text-brand-lavender"
+                  >
+                    <Icon size={20} />
+                  </a>
+                ))}
+              </div>
+            </div>
+
+            <div className="glass-card p-6">
+              <h3 className="font-display font-bold text-brand-text mb-3">Response Time</h3>
+              <p className="text-brand-muted text-sm leading-relaxed">
+                I typically respond to messages within <span className="text-brand-lavender font-semibold">24 hours</span>.
                 For urgent matters, feel free to reach out directly via email.
               </p>
             </div>
-          </div>
+          </motion.div>
 
           {/* Form */}
-          <div className="lg:col-span-3">
-            <div className="card">
+          <motion.div
+            variants={fadeInRight}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: '-100px' }}
+            className="lg:col-span-3"
+          >
+            <div className="glass-card p-8">
               {status === 'success' ? (
                 <div className="text-center py-12">
-                  <div className="w-16 h-16 bg-teal-100 dark:bg-teal-900/40 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <CheckCircle2 className="text-teal-600 dark:text-teal-400" size={32} />
+                  <div className="w-16 h-16 bg-brand-lavender/10 border border-brand-lavender/20 rounded-full flex items-center justify-center mx-auto mb-4 glow-lavender">
+                    <CheckCircle2 className="text-brand-lavender" size={32} />
                   </div>
-                  <h3 className="text-xl font-bold text-surface-900 dark:text-surface-100 mb-2">Message Sent!</h3>
-                  <p className="text-surface-600 dark:text-surface-400 mb-6">
+                  <h3 className="text-xl font-display font-bold text-brand-text mb-2">Message Sent!</h3>
+                  <p className="text-brand-muted mb-6">
                     Thanks for reaching out. I'll get back to you soon.
                   </p>
                   <button onClick={() => setStatus('idle')} className="btn-secondary">
@@ -180,7 +224,7 @@ export default function Contact() {
                   </Field>
 
                   {status === 'error' && (
-                    <div className="flex items-center gap-2 p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-xl text-red-600 dark:text-red-400 text-sm">
+                    <div className="flex items-center gap-2 p-3 bg-red-500/10 border border-red-500/20 rounded-xl text-red-400 text-sm">
                       <AlertCircle size={16} />
                       Something went wrong. Please try again.
                     </div>
@@ -200,7 +244,7 @@ export default function Contact() {
                 </form>
               )}
             </div>
-          </div>
+          </motion.div>
         </div>
       </div>
     </section>

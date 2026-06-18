@@ -8,8 +8,8 @@ export default function Admin() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-surface-50 dark:bg-surface-950">
-        <Loader2 className="animate-spin text-primary-500" size={40} />
+      <div className="min-h-screen flex items-center justify-center bg-brand-bg">
+        <Loader2 className="animate-spin text-brand-lavender" size={40} />
       </div>
     );
   }

@@ -59,11 +59,11 @@ function Modal({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
       <div className="glass-strong rounded-3xl p-6 w-full max-w-2xl max-h-[90vh] overflow-y-auto shadow-2xl">
         <div className="flex items-center justify-between mb-6">
-          <h2 className="text-xl font-bold gradient-text">{isEdit ? 'Edit Project' : 'New Project'}</h2>
-          <button onClick={onClose} className="p-2 glass rounded-xl hover:bg-surface-100 dark:hover:bg-surface-800 transition-colors">
+          <h2 className="text-xl font-display font-bold gradient-text">{isEdit ? 'Edit Project' : 'New Project'}</h2>
+          <button onClick={onClose} className="p-2 glass rounded-xl hover:bg-white/10 transition-colors text-brand-muted">
             <X size={18} />
           </button>
         </div>
@@ -76,7 +76,7 @@ function Modal({
             { label: 'Live URL', key: 'live_url', placeholder: 'https://...' },
           ].map(({ label, key, placeholder }) => (
             <div key={key}>
-              <label className="block text-sm font-medium text-surface-700 dark:text-surface-300 mb-1">{label}</label>
+              <label className="block text-sm font-medium text-brand-text/80 mb-1">{label}</label>
               <input
                 type="text"
                 value={(form as Record<string, unknown>)[key] as string}
@@ -88,7 +88,7 @@ function Modal({
           ))}
 
           <div>
-            <label className="block text-sm font-medium text-surface-700 dark:text-surface-300 mb-1">Description *</label>
+            <label className="block text-sm font-medium text-brand-text/80 mb-1">Description *</label>
             <textarea
               rows={3}
               value={form.description}
@@ -99,7 +99,7 @@ function Modal({
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-surface-700 dark:text-surface-300 mb-1">Tech Stack</label>
+            <label className="block text-sm font-medium text-brand-text/80 mb-1">Tech Stack</label>
             <div className="flex gap-2 mb-2">
               <input
                 type="text"
@@ -113,7 +113,7 @@ function Modal({
             </div>
             <div className="flex flex-wrap gap-2">
               {form.tech_stack.map(t => (
-                <span key={t} className="tag flex items-center gap-1 cursor-pointer hover:bg-red-100 dark:hover:bg-red-900/30 transition-colors"
+                <span key={t} className="tag flex items-center gap-1 cursor-pointer hover:bg-red-500/20 transition-colors"
                   onClick={() => removeTech(t)}>
                   {t} <X size={12} />
                 </span>
@@ -123,7 +123,7 @@ function Modal({
 
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-medium text-surface-700 dark:text-surface-300 mb-1">Sort Order</label>
+              <label className="block text-sm font-medium text-brand-text/80 mb-1">Sort Order</label>
               <input
                 type="number"
                 value={form.sort_order}
@@ -135,17 +135,17 @@ function Modal({
               <label className="flex items-center gap-3 cursor-pointer">
                 <div
                   onClick={() => setForm(f => ({ ...f, featured: !f.featured }))}
-                  className={`w-12 h-6 rounded-full transition-colors duration-200 ${form.featured ? 'bg-primary-500' : 'bg-surface-300 dark:bg-surface-600'}`}
+                  className={`w-12 h-6 rounded-full transition-colors duration-200 ${form.featured ? 'bg-brand-lavender' : 'bg-brand-surface-3'}`}
                 >
-                  <div className={`w-5 h-5 bg-white rounded-full mt-0.5 transition-transform duration-200 shadow-sm ${form.featured ? 'translate-x-6.5 ml-0.5' : 'ml-0.5'}`} />
+                  <div className={`w-5 h-5 bg-white rounded-full mt-0.5 transition-transform duration-200 shadow-sm ${form.featured ? 'translate-x-6 ml-0.5' : 'ml-0.5'}`} />
                 </div>
-                <span className="text-sm font-medium text-surface-700 dark:text-surface-300">Featured</span>
+                <span className="text-sm font-medium text-brand-text/80">Featured</span>
               </label>
             </div>
           </div>
 
           {error && (
-            <div className="flex items-center gap-2 p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-xl text-red-600 dark:text-red-400 text-sm">
+            <div className="flex items-center gap-2 p-3 bg-red-500/10 border border-red-500/20 rounded-xl text-red-400 text-sm">
               <AlertCircle size={14} /> {error}
             </div>
           )}
@@ -197,24 +197,24 @@ export default function ProjectManager() {
   return (
     <div>
       <div className="flex items-center justify-between mb-6">
-        <h2 className="text-xl font-bold text-surface-900 dark:text-surface-100">Projects</h2>
+        <h2 className="text-xl font-display font-bold text-brand-text">Projects</h2>
         <button onClick={() => setModal({ open: true, project: null })} className="btn-primary py-2 px-4 text-sm">
           <Plus size={16} /> Add Project
         </button>
       </div>
 
       {success && (
-        <div className="flex items-center gap-2 p-3 bg-teal-50 dark:bg-teal-900/20 border border-teal-200 dark:border-teal-800 rounded-xl text-teal-700 dark:text-teal-300 text-sm mb-4">
+        <div className="flex items-center gap-2 p-3 bg-emerald-500/10 border border-emerald-500/20 rounded-xl text-emerald-400 text-sm mb-4">
           <CheckCircle2 size={16} /> {success}
         </div>
       )}
 
       {loading ? (
-        <div className="flex justify-center py-12"><Loader2 className="animate-spin text-primary-500" size={32} /></div>
+        <div className="flex justify-center py-12"><Loader2 className="animate-spin text-brand-lavender" size={32} /></div>
       ) : (
         <div className="space-y-3">
           {projects.map(p => (
-            <div key={p.id} className="card flex items-center gap-4">
+            <div key={p.id} className="glass-card-hover p-5 flex items-center gap-4">
               <img
                 src={p.image_url || 'https://images.pexels.com/photos/11035471/pexels-photo-11035471.jpeg?auto=compress&cs=tinysrgb&w=100'}
                 alt={p.title}
@@ -222,28 +222,28 @@ export default function ProjectManager() {
               />
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-2">
-                  <h3 className="font-semibold text-surface-900 dark:text-surface-100 truncate">{p.title}</h3>
+                  <h3 className="font-semibold text-brand-text truncate">{p.title}</h3>
                   {p.featured && <span className="tag text-xs shrink-0">Featured</span>}
                 </div>
-                <p className="text-sm text-surface-500 dark:text-surface-400 truncate">{p.description}</p>
+                <p className="text-sm text-brand-muted truncate">{p.description}</p>
                 <div className="flex gap-1 mt-1.5 flex-wrap">
                   {p.tech_stack.slice(0, 3).map(t => (
-                    <span key={t} className="text-xs px-2 py-0.5 bg-surface-100 dark:bg-surface-800 rounded text-surface-600 dark:text-surface-400">{t}</span>
+                    <span key={t} className="text-xs px-2 py-0.5 bg-brand-surface-3 rounded text-brand-muted">{t}</span>
                   ))}
-                  {p.tech_stack.length > 3 && <span className="text-xs text-surface-400">+{p.tech_stack.length - 3}</span>}
+                  {p.tech_stack.length > 3 && <span className="text-xs text-brand-muted-2">+{p.tech_stack.length - 3}</span>}
                 </div>
               </div>
               <div className="flex gap-2 shrink-0">
                 <button
                   onClick={() => setModal({ open: true, project: p })}
-                  className="p-2 glass rounded-lg hover:text-primary-600 dark:hover:text-primary-400 transition-colors"
+                  className="p-2 glass rounded-lg hover:text-brand-lavender transition-colors text-brand-muted"
                 >
                   <Pencil size={16} />
                 </button>
                 <button
                   onClick={() => handleDelete(p.id)}
                   disabled={deleting === p.id}
-                  className="p-2 glass rounded-lg hover:text-red-500 transition-colors disabled:opacity-50"
+                  className="p-2 glass rounded-lg hover:text-red-400 transition-colors disabled:opacity-50 text-brand-muted"
                 >
                   {deleting === p.id ? <Loader2 size={16} className="animate-spin" /> : <Trash2 size={16} />}
                 </button>
@@ -251,7 +251,7 @@ export default function ProjectManager() {
             </div>
           ))}
           {projects.length === 0 && (
-            <p className="text-center text-surface-500 py-12">No projects yet. Add one!</p>
+            <p className="text-center text-brand-muted py-12">No projects yet. Add one!</p>
           )}
         </div>
       )}
